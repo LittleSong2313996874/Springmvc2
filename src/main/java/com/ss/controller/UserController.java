@@ -3,6 +3,7 @@ package com.ss.controller;
 
 import com.ss.Dao.UserDao;
 import com.ss.pojo.Group;
+import com.ss.pojo.PageBean;
 import com.ss.pojo.Person;
 import com.ss.service.UserService;
 import jdk.nashorn.internal.ir.RuntimeNode;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,17 +31,17 @@ public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Resource
-    UserService userService; //这个名字要和刚才注入式给的一样，我猜。
+    UserService userService; //这个名字要和刚才注入式给的一样
 
 
     //增加---------------------------------------------------------------------
     @RequestMapping(value = "/Person",method = RequestMethod.POST)
-    public String loginMethod(Model model, Person person) throws Exception{
+    public String insertPerson(Model model, Person person) throws Exception{
 
-        logger.debug("人员信息："+person );
+        logger.info("[添加操作] 人员信息："+person );
         int i = userService.addPerson(person);
         if(i==1){
-            logger.info("新插入人员ID: ",person.getId());
+            //logger.info("Successful ! 新插入人员ID: ",person.getId());
             return "redirect:Persons";
         }
         model.addAttribute("message","没有插入成功 ！");
@@ -49,10 +51,10 @@ public class UserController {
     //准备更新，先到达一个待修改页面 --------------------------------------------------
     @RequestMapping(value = "/prepare_update/{id}")
     public String prepareUpdate(Model model, @PathVariable("id") Integer id) throws Exception{
-        logger.debug("要修改的人员id为：  "+id+"");
+        logger.debug("[准备更新] 要修改的人员id为：  "+id+"");
         Person person1 = userService.getPersonById(id);
         if(person1!=null){
-            logger.debug("prepareUpdate() -> 先得到该人员信息： "+person1);
+            logger.debug("先得到该人员信息： "+person1);
             model.addAttribute("person",person1);
             return "prepareUpdate";
         }else{
@@ -63,16 +65,16 @@ public class UserController {
 
     //正式更新，向数据库发出请求
     @RequestMapping(value = "/Person", method = RequestMethod.PUT)
-    public String update(Model model, Person person) throws Exception{
-        logger.info("马上要执行更新了，我们先看下用户输入的信息："+person);
+    public String updatePerson(Model model, Person person) throws Exception{
+        logger.info("[执行更新] 用户刚刚输入的信息为："+person);
         if(person.getId()!=null){
             int i = userService.updatePerson(person);
             if(i==1) {
-                logger.info("--嘿，更新成功了哦--");
+                //logger.info("--更新成功--");
                 return "redirect:Persons";
             }else{
 
-                model.addAttribute("message","没有插入成功 ！");
+                model.addAttribute("message","没有更新成功 ！");
                 return "failure";
             }
         }else {
@@ -84,24 +86,24 @@ public class UserController {
 
     //查询所有
     @RequestMapping(value = "/Persons", method = RequestMethod.GET)
-    public String getAll(Model model) throws Exception{
+    public String getAllPerson(@RequestParam(value = "currentPage",defaultValue = "1", required = true) int currentPage, Model model){
 
-        List list = userService.getAll();
-        logger.info("查询所有");
-        model.addAttribute("allUser",list);
+        logger.info("[查询所有]  第"+currentPage+"页");
+        PageBean<Person> pageBean= userService.displayByPage(currentPage);
+        model.addAttribute("pBean",pageBean);
 
         return "list";
 
     }
 
     @RequestMapping(value = "/Person", method = RequestMethod.GET)
-    public String getById( Model model, Integer id )throws Exception{
-        logger.info("方法：通过ID查找，收到id为："+id);
+    public String getPersonById( Model model, Integer id )throws Exception{
+        logger.info("[通过ID查询]  收到id为："+id);
 
         if(id != null){
             Person personOne = userService.getPersonById(id);
             if(personOne!=null){
-                logger.info("通过id查找成功");
+                //logger.info("通过id查找成功");
                 model.addAttribute("personOne",personOne);
                 return "getbyID";
             }else{
@@ -120,7 +122,7 @@ public class UserController {
     @RequestMapping(value = "/myerror")
     public String failure(Model model, Integer illegal) throws Exception{
 
-        logger.error("有操作发生了意外状况，请开发人员检测 ！");
+        logger.error("[发生异常] 有操作发生了意外状况，请开发人员检测 ！");
         if (illegal==1) {
             model.addAttribute("message", "请从列表页面进行修改(非法操作)");
         }else if(illegal==5){
@@ -133,9 +135,10 @@ public class UserController {
     //删除
     @RequestMapping(value = "/Person/{id}", method = RequestMethod.DELETE)
     public String Delete(@PathVariable("id") Integer id, Model model) throws Exception{
+        logger.info("[删除操作]");
         int i = userService.deletePerson(id);
         if(i==1){
-            logger.info("--嘿，删除成功了--");
+            logger.info("-- delete successful --");
         }else {
             /*
              *   注意下面的 ..代表返回上一级，
@@ -176,7 +179,8 @@ public class UserController {
      *
      */
     @RequestMapping(value = "/jsontest", method = RequestMethod.GET)
-    public String getJson(Model model) throws Exception{
+    public String getJsonAll(Model model) throws Exception{
+        logger.info("[JSP JSON GETALL]");
         List list = userService.getAll();
         Group group = new Group();
         group.setGroupId(1);
@@ -186,8 +190,8 @@ public class UserController {
         return "json1";
     }
     @RequestMapping(value = "/jsonbyid", method = RequestMethod.GET)
-    public String getJsonById(Model model, Integer id) throws Exception{
-
+    public String getJsonOneById(Model model, Integer id) throws Exception{
+        logger.info("[JSP JSON GETONE]");
         Person person = userService.getPersonById(id);
         model.addAttribute("ONEjson",person);
         return "json2";

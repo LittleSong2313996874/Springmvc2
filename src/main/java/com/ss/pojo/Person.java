@@ -78,7 +78,7 @@ public class Person {
 
 	@Override
     public String toString() {
-        return "(" + id + "," + NAME +","+gender+ "," + age + "," +  graduation+ "," +senior+ "," +create_at+ "," +update_at+ ")\n";
+        return "(" + id + "," + NAME +","+gender+ "," + age + "," +  graduation+ "," +senior+ "," +create_at+ "," +update_at+ ")";
         
     }
 	

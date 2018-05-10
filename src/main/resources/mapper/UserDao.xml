@@ -60,12 +60,19 @@
 
 	<!-- 查询所有学生
 	理论上resultType要写List<Student>
-	但这里只需书写List中的类型即可，即只需书写Person的全路径名
+	但这里只需书写List中的类型即可，即只需书写Person的全路径名  findByPage
 	-->
 	<select id="getAll" resultType="com.ss.pojo.Person">
 		select * from table1
 	</select>
 
+	<!-- 根据分页数据start 和size查询数据 -->
+	<select id="findByPage" parameterType="Map" resultType="com.ss.pojo.Person">
+		select * from table1
+		<if test="#{start} and #{size}">
+			limit #{start},#{size}
+		</if>
+	</select>
 
 	<!-- 删除学生 -->
 	<delete id="deletePerson" parameterType="java.lang.Integer">

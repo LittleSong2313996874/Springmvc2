@@ -8,7 +8,7 @@
     
 	<form action="${pageContext.request.contextPath}/taskUser/Person" method="post">
 		<table border="2" align="center">
-			<caption><h2>用户注册</h2></caption>
+			<caption><h2>增加数据</h2></caption>
 			<tr>
 				<th>姓名</th>
 				<td><input type="text" name="NAME"/></td>

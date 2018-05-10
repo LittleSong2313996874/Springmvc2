@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.Jnshu</groupId>
-  <artifactId>task2test</artifactId>
+  <artifactId>SpringMvc</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
@@ -71,6 +71,18 @@
       <artifactId>spring-aspects</artifactId>
       <version>${spring.version}</version>
     </dependency>
+    <!-- aop aspect注解导包-->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>1.8.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.8.9</version>
+    </dependency>
+    <!-- aop end -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-expression</artifactId>
@@ -176,9 +188,9 @@
 
     <!-- 导入java ee jar 包-->
     <dependency>
-        <groupId>javax</groupId>
-        <artifactId>javaee-api</artifactId>
-        <version>7.0</version>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
     </dependency>
 
     <!-- json 阿里巴巴的fastjson-->
@@ -196,11 +208,11 @@
       <classifier>jdk15</classifier>
     </dependency>
 
-      <dependency>
-          <groupId>atg.taglib.json</groupId>
-          <artifactId>json-taglib</artifactId>
-          <version>0.4.1</version>
-      </dependency>
+    <dependency>
+      <groupId>atg.taglib.json</groupId>
+      <artifactId>json-taglib</artifactId>
+      <version>0.4.1</version>
+    </dependency>
 
     <dependency>
       <groupId>org.json</groupId>
@@ -215,7 +227,7 @@
 
 
 
-      <!--以下为web上传,下载jar包-->
+    <!--以下为web上传,下载jar包-->
     <!-- 无需再配置commons-io，commons-fileupload会依赖引入 -->
     <dependency>
       <groupId>commons-fileupload</groupId>
@@ -223,14 +235,60 @@
       <version>1.3.1</version>
     </dependency>
 
+    <!-- mybatis分页插件依赖 -->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>4.0.0</version>
+    </dependency>
 
 
+    <dependency>
+      <groupId>org.apache.tiles</groupId>
+      <artifactId>tiles-extras</artifactId>
+      <version>3.0.5</version>
+    </dependency>
+
+
+   <!-- <dependency>
+      <groupId>org.apache.tiles</groupId>
+      <artifactId>tiles-api</artifactId>
+      <version>3.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tiles</groupId>
+      <artifactId>tiles-core</artifactId>
+      <version>3.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tiles</groupId>
+      <artifactId>tiles-servlet</artifactId>
+      <version>3.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tiles</groupId>
+      <artifactId>tiles-el</artifactId>
+      <version>3.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tiles</groupId>
+      <artifactId>tiles-jsp</artifactId>
+      <version>3.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.6</version>
+    </dependency>
+-->
   </dependencies>
 
 
 
   <build>
-    <finalName>task2test</finalName>
+
+
+    <finalName>SpringMvc</finalName>
     <plugins>
 
       <!--servlet容器 jetty插件-->
@@ -266,15 +324,6 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <warSourceDirectory>${basedir}/WebRoot</warSourceDirectory>
-
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
 
     </plugins>
   </build>

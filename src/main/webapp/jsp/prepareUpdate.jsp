@@ -8,7 +8,7 @@
     
 	<form action="${pageContext.request.contextPath}/taskUser/Person" method="post">
 		<table border="2" align="center">
-			<caption><h2>用户注册</h2></caption>
+			<caption><h3>修改数据</h3></caption>
 			<tr>
 				<%--把id设为隐藏域，修改信息不需要修改id --%>
 				<input type="hidden" name="id" value="${person.id}"/>

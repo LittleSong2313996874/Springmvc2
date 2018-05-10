@@ -34,9 +34,9 @@ public class JsonController {
     UserService userService; //这个名字要和刚才注入时给的一样。
 
 
-
     @RequestMapping(value = "/JsonPersons", method = RequestMethod.GET)
-    public @ResponseBody Group getJson(Model model) throws Exception{
+    public @ResponseBody Group getPureJsonAll(Model model) throws Exception{
+        logger.info("[PURE JSON GET_ALL]");
         List list = userService.getAll();
         Group group = new Group();
         group.setGroupId(1);
@@ -47,7 +47,8 @@ public class JsonController {
 
     @RequestMapping(value = "/JsonPerson/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Person getJsonById(Model model, @PathVariable("id") Integer id) throws Exception{
+    public Person getPureJsonById(Model model, @PathVariable("id") Integer id) throws Exception{
+        logger.info("[PURE JSON GET_ONE]");
         Person person = userService.getPersonById(id);
         return person;
     }
@@ -56,8 +57,8 @@ public class JsonController {
     //更新后把结果的json返回
     @RequestMapping(value = "/JsonPerson/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public Person updateJsonById(Model model, @PathVariable("id") Integer id) throws Exception{
-
+    public Person updatePureJsonById(Model model, @PathVariable("id") Integer id) throws Exception{
+        logger.info("[PURE JSON UPDATE_ONE]");
         Person person = userService.getPersonById(id);
 
         person.setNAME("已更新");

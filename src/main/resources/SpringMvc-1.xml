@@ -3,13 +3,21 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+">
 
+    <!--SpringMvc比Spring先扫描-->
     <!-- 扫描添加了controller注解的包 -->
     <context:component-scan base-package="com.ss.controller"/>
+    <context:component-scan base-package="com.ss.aspect"/>
     <!--使用注解开发，不用配置controller了
     <bean name="/hello.action" class="com.ss.demo.demoDay1.HelloAction" />
     -->
@@ -20,15 +28,18 @@
     <!--使用默认的Servlet来响应静态文件-->
     <mvc:default-servlet-handler/>
 
+    <!--拦截静态资源-->
+    <mvc:resources location="/page/template/img/" mapping="img/**"/>
+    <mvc:resources location="/page/template/css/" mapping="css/**"/>
 
 
-    <!-- 视图解析器 -->
+    <!-- 视图解析器
     <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- view是用什么显示，这里是jsp，还可以用velocity之类的 -->
-       <!-- <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>-->
-        <property name="prefix" value="/jsp/"/>
+
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+        <property name="prefix" value="WEB-INF/jsp/template/"/>
         <property name="suffix" value=".jsp"/>
-    </bean>
+    </bean>-->
 
 
     <!-- 文件上传使用 -->
@@ -37,6 +48,37 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="resolveLazily" value="true"/>
     </bean>
+
+
+
+    <aop:config proxy-target-class="true" />
+    <aop:config>
+        <!--定义切面-->
+        <aop:pointcut expression="execution(* com.ss.controller.*Controller.*(..))" id="logPointCut"/>
+        <aop:aspect id="logAspect" ref="logInterceptor">
+            <!-- 定义切入点 (配置在com.ss.controller下所有的类在调用之前都会被拦截)-->
+            <!--方法执行之前被调用执行的-->
+          <!--  <aop:before method="beforeMethod" pointcut-ref="logPointCut"/>&lt;!&ndash;一个切入点的引用&ndash;&gt;
+            <aop:after method="afterMethod" pointcut-ref="logPointCut"/>一个切入点的引用-->
+            <aop:around method="Around" pointcut-ref="logPointCut"/>
+        </aop:aspect>
+    </aop:config>
+
+
+
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles/tiles-definitions.xml</value>
+
+            </list>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+    </bean>
+
 
 </beans>
 

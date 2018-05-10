@@ -74,4 +74,14 @@ public class UserDaoTest {
 
     }
 
+    @Test // lambda表达式
+    public void Long(){
+        long i = System.currentTimeMillis();
+        List<String> AreYouOk = Arrays.asList("nihao","wohao","dajiahao","caishi","zhendehao");
+        AreYouOk.forEach(x -> logger.info(x));
+        AreYouOk.forEach(logger::info);
+        i = System.currentTimeMillis()-i;
+        System.out.println(i+"");
+    }
+
 }

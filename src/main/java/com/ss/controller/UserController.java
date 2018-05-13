@@ -30,9 +30,8 @@ public class UserController {
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Resource
+    @Resource  //Task2
     UserService userService; //这个名字要和刚才注入式给的一样
-
 
     //增加---------------------------------------------------------------------
     @RequestMapping(value = "/Person",method = RequestMethod.POST)

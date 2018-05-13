@@ -36,7 +36,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><a href="${pageContext.request.contextPath}/">返回首页 </a></td>
+				<td><a href="${pageContext.request.contextPath}/taskUser">返回首页 </a></td>
 			</tr>
 		</table>
 	</form>	

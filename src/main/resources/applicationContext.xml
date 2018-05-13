@@ -68,7 +68,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
        <!-- <property name="configLocation" value="mybatis-config.xml"/>-->
-        <!-- 自动扫描mapping.xml文件-->
+        <!-- 自动扫描该目录下的所有 .xml 配置文件-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
 
@@ -76,12 +76,15 @@
 
     <!--自动扫描mapper包下的mapper接口以及xml映射文件，来管理mapper代理对象注入到spring容器中-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 指定扫描的包名
+            如果扫描多个包，每个包中间使用半角逗号分隔
+         -->
         <property name="basePackage" value="com.ss.Dao"/>
-              <!-- 这里为什么给成ref就会报错，只能用value ? -->
-        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
     </bean>
-<!--
 
+
+
+    <!--
     <aop:config proxy-target-class="true" />
     <aop:config>
         &lt;!&ndash;定义切面&ndash;&gt;

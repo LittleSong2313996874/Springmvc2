@@ -29,17 +29,18 @@
     <mvc:default-servlet-handler/>
 
     <!--拦截静态资源-->
-    <mvc:resources location="/page/template/img/" mapping="img/**"/>
-    <mvc:resources location="/page/template/css/" mapping="css/**"/>
+    <mvc:resources location="/page/template/img/" mapping="img/*.png"/>
+    <mvc:resources location="/page/template/img/" mapping="img/*.jpg"/>
+    <mvc:resources location="/page/template/css/" mapping="css/*.css"/>
 
 
-    <!-- 视图解析器
+    <!-- 视图解析器-->
     <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
-        <property name="prefix" value="WEB-INF/jsp/template/"/>
+        <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
-    </bean>-->
+        <property name="order" value="11"/>
+    </bean>
 
 
     <!-- 文件上传使用 -->
@@ -74,9 +75,9 @@
             </list>
         </property>
     </bean>
-
     <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <property name="order" value="10"/>
     </bean>
 
 

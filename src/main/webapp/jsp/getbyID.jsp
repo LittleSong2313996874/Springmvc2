@@ -24,7 +24,7 @@
         <th>年龄</th>
         <th>毕业院校</th>
         <th>师兄</th>
-        <th><a href="${pageContext.request.contextPath}/">返回首页 </a></th>
+        <th><a href="${pageContext.request.contextPath}/taskUser">返回首页 </a></th>
     </tr>
         <tr>
             <td>${personOne.id}</td>

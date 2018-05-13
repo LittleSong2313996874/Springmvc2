@@ -16,7 +16,7 @@
 </head>
 <body>
 <br/>
-<c:set var="contextpath" value="${pageContext.request.contextPath}" />
+<c:set var="contextpath" value="${pageContext.request.contextPath}" scope="request" />
 
 <a href="${contextpath}/taskUser/jsontest">GetJson</a>
 <table border="2" align="center">
@@ -27,7 +27,7 @@
         <td>年龄</td>
         <td>毕业院校</td>
         <td>师兄</td>
-        <td><a href="${contextpath}/">返回首页 </a></td>
+        <td><a href="${contextpath}/taskUser">返回首页 </a></td>
     </tr>
     <%--遍历lstUsers集合中的User对象 --%>
     <c:forEach var="user" items="${pBean.lists}">

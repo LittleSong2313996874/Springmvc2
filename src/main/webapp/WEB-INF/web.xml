@@ -5,6 +5,11 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>webApp.root</param-value>
+  </context-param>
+
   <!-- 加载spring的配置文件-->
   <!-- ContextLoaderListener监听器：监听Web容器，一旦启动，自动装配ApplicationContext的配置信息 -->
   <listener>
